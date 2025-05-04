@@ -1,6 +1,6 @@
 const config = {
   user: 'sa',
-  password: '29279525236', // <-- SA kullanıcısına verdiğin şifre
+  password: '29279525236',
   server: 'localhost',
   database: 'NoteAppDB',
   options: {
