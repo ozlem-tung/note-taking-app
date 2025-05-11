@@ -1,0 +1,59 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f7f7f7;
+  color: #333;
+}
+body h1,
+body h2 {
+  color: rgb(25.5, 25.5, 25.5);
+}
+body form {
+  margin-bottom: 2rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+  width: 400px;
+  max-width: 100%;
+}
+body form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+body form button {
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+body form button:hover {
+  background-color: rgb(60.5577689243, 139.4422310757, 63.7450199203);
+}
+body ul {
+  padding: 0;
+  list-style: none;
+}
+body ul li {
+  background: white;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-left: 5px solid #4caf50;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+body ul li button {
+  margin-left: 0.5rem;
+  background-color: #f44336;
+}
+body ul li button:hover {
+  background-color: rgb(234.1839622642, 27.9622641509, 12.8160377358);
+}
+
+/*# sourceMappingURL=style.css.map */

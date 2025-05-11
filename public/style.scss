@@ -1,0 +1,373 @@
+// style.scss (güncellenmiş - nested SCSS yapısıyla)
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 20px;
+  color: #222;
+}
+
+h1 {
+  font-size: 32px;
+  color: #111;
+}
+
+.auth-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  button {
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #218838;
+    }
+  }
+}
+
+.switch-auth {
+  text-align: center;
+  margin-top: 10px;
+
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #ddd;
+    }
+  }
+}
+
+#userPanel {
+  display: none;
+  margin-top: 30px;
+
+  #usernameBox {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #noteInput {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  #addNoteBtn {
+    padding: 8px 16px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #0069d9;
+    }
+  }
+}
+
+#noteList {
+  list-style: none;
+  padding: 0;
+
+  li {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+
+    span {
+      flex: 1;
+    }
+
+    small {
+      color: #777;
+      font-size: 12px;
+    }
+
+    button {
+      padding: 6px 10px;
+      font-size: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:first-of-type {
+        background-color: #dc3545;
+        color: white;
+
+        &:hover {
+          background-color: #c82333;
+        }
+      }
+
+      &:last-of-type {
+        background-color: #ffc107;
+        color: black;
+
+        &:hover {
+          background-color: #e0a800;
+        }
+      }
+    }
+  }
+}
+
+#messageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+
+  &.show {
+    display: flex;
+  }
+
+  .modal-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+
+    #messageText {
+      margin-bottom: 20px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .yes-btn,
+    .no-btn {
+      padding: 10px 16px;
+      font-size: 15px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .yes-btn {
+      background-color: #28a745;
+      color: white;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    .no-btn {
+      background-color: #dc3545;
+      color: white;
+
+      &:hover {
+        background-color: #c82333;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+    }
+  }
+}
+
+
+
+.modal-overlay {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #fff;
+  border: 2px solid #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 16px 24px;
+  border-radius: 10px;
+  z-index: 9999;
+  max-width: 400px;
+  width: 90%;
+  animation: slideDown 0.3s ease-out;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  p {
+    margin: 0;
+    color: #333;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 28px;
+    height: 28px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: #111;
+    }
+  }
+
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, -20px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+.modal-box {
+  position: relative;
+  background-color: #ffffff; // beyaz kutu
+  padding: 25px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+
+  p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  button {
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  .close-btn {
+    position: absolute;
+    top: -12px;
+    right: -12px;
+    width: 32px;
+    height: 32px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &:hover {
+      background-color: #222;
+    }
+  }
+}
+
+// Hafif fade-in animasyonu
+@keyframes fadeIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

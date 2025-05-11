@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Notlarım</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 2rem;
+        }
+
+        ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        li {
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.5rem;
+        }
+
+        button {
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Notlarım</h1>
+
+    <!-- 📋 Notları gösteren alan -->
+    <ul id="noteList"></ul>
+
+    <h2>Yeni Not Ekle</h2>
+    <form id="noteForm">
+        <textarea id="noteContent" rows="4" cols="50" placeholder="Notunuzu yazın..." required></textarea><br>
+        <button type="submit">Not Ekle</button>
+    </form>
+
+    <script src="notes.js"></script>
+</body>
+
+</html>

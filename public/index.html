@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Not Uygulaması</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <h1>Not Uygulaması</h1>
+
+    <!-- Mesaj Overlay -->
+    <div id="messageOverlay" class="hidden">
+        <div id="messageBox" class="modal-box">
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+            <p id="messageText">Mesaj yeri</p>
+            <div class="btn-group">
+                <button id="confirmYes" class="yes-btn">✅ Evet</button>
+                <button id="confirmNo" class="no-btn">❌ Hayır</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Giriş Ekranı -->
+    <section id="loginSection">
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Kullanıcı Adı" required autocomplete="off" />
+            <input type="password" id="loginPassword" placeholder="Şifre" required autocomplete="off" />
+            <button type="submit">Giriş Yap</button>
+        </form>
+        <p>Hesabınız yok mu? <button id="showRegisterBtn">Kayıt olun</button></p>
+    </section>
+
+    <!-- Kayıt Ekranı -->
+    <section id="registerSection" style="display: none;">
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Yeni Kullanıcı Adı" required autocomplete="off" />
+            <input type="password" id="registerPassword" placeholder="Yeni Şifre" required autocomplete="off" />
+            <button type="submit">Kayıt Ol</button>
+        </form>
+        <p>Zaten hesabınız var mı? <button id="showLoginBtn">Giriş Yap</button></p>
+    </section>
+
+    <!-- Kullanıcı Paneli -->
+    <div id="userPanel" style="display: none;">
+        <div id="usernameBox" style="margin-bottom: 10px;"></div>
+        <button id="logoutBtn">Çıkış Yap</button>
+
+        <textarea id="noteInput" placeholder="Notunuzu yazın..."></textarea>
+        <button id="addNoteBtn">Not Ekle</button>
+
+        <h2>Notlarım</h2>
+        <input type="text" id="searchInput" placeholder="Notlarda ara..." />
+        <ul id="noteList"></ul>
+    </div>
+
+    <div id="messageBox" style="display: none; padding: 10px; margin-top: 10px; border-radius: 5px;"></div>
+
+    <script src="frontend.js"></script>
+</body>
+
+</html>
