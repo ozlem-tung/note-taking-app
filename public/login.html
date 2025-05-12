@@ -9,6 +9,17 @@
 </head>
 
 <body>
+    <div id="messageOverlay" class="hidden">
+        <div id="messageBox" class="modal-box">
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+            <p id="messageText">Mesaj yeri</p>
+            <div class="btn-group">
+                <button id="confirmYes" class="yes-btn">✅ Evet</button>
+                <button id="confirmNo" class="no-btn">❌ Hayır</button>
+            </div>
+        </div>
+    </div>
+
     <h1>Giriş Yap</h1>
     <form id="loginForm">
         <label for="username">Kullanıcı Adı:</label>

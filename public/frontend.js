@@ -1,38 +1,43 @@
-// frontend.js (TAMAMEN GÜNCELLENMİŞ)
+// frontend.js (güncellenmiş tam sürüm)
 
 let token = null;
 let currentUser = null;
 
-// Sayfa yüklendiğinde giriş kutuları sıfırlanır
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('loginUsername').value = '';
-  document.getElementById('loginPassword').value = '';
+// Sayfa yüklendiğinde giriş kutuları temizlensin
+window.addEventListener('DOMContentLoaded', () => {
+  const usernameInput = document.getElementById('loginUsername');
+  const passwordInput = document.getElementById('loginPassword');
+  if (usernameInput) usernameInput.value = '';
+  if (passwordInput) passwordInput.value = '';
 });
 
 // Giriş işlemi
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const username = document.getElementById('loginUsername').value;
-  const password = document.getElementById('loginPassword').value;
+const loginForm = document.getElementById('loginForm');
+if (loginForm) {
+  loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
 
-  const res = await fetch('/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password }),
+    const res = await fetch('/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      token = data.token;
+      currentUser = username;
+      showUserPanel();
+      loadNotes();
+    } else {
+      showCustomAlert(data.message || 'Giriş başarısız');
+    }
   });
+}
 
-  const data = await res.json();
-  if (res.ok) {
-    token = data.token;
-    currentUser = username;
-    showUserPanel();
-    loadNotes();
-  } else {
-    showCustomAlert(data.message || 'Giriş başarısız');
-  }
-});
-
-// Kayıt formu göster
+// Kayıt formunu göster
 const showRegisterBtn = document.getElementById('showRegisterBtn');
 if (showRegisterBtn) {
   showRegisterBtn.addEventListener('click', () => {
@@ -66,56 +71,7 @@ function showUserPanel() {
   ).innerText = `Hoş geldin, ${currentUser}`;
 }
 
-// Mesaj kutusu gösterimi
-function showCustomAlert(message) {
-  const overlay = document.getElementById('messageOverlay');
-  const messageBox = document.getElementById('messageBox');
-  const messageText = document.getElementById('messageText');
-
-  overlay.classList.remove('hidden');
-  messageText.innerText = message;
-
-  document.querySelector('.btn-group').innerHTML = `
-    <button class="yes-btn" id="confirmOk">Tamam</button>
-  `;
-
-  document.getElementById('confirmOk').onclick = () => {
-    overlay.classList.add('hidden');
-  };
-  document.getElementById('closeModalBtn').onclick = () => {
-    overlay.classList.add('hidden');
-  };
-}
-
-function showConfirmDialog(message, onConfirm) {
-  const overlay = document.getElementById('messageOverlay');
-  const messageText = document.getElementById('messageText');
-  messageText.innerText = message;
-
-  overlay.classList.add('show');
-
-  const yesBtn = document.getElementById('confirmYes');
-  const noBtn = document.getElementById('confirmNo');
-  const closeBtn = document.getElementById('closeModalBtn');
-
-  function closeDialog() {
-    overlay.classList.remove('show');
-    yesBtn.removeEventListener('click', confirm);
-    noBtn.removeEventListener('click', closeDialog);
-    closeBtn.removeEventListener('click', closeDialog);
-  }
-
-  function confirm() {
-    closeDialog();
-    onConfirm();
-  }
-
-  yesBtn.addEventListener('click', confirm);
-  noBtn.addEventListener('click', closeDialog);
-  closeBtn.addEventListener('click', closeDialog);
-}
-
-// Notları yükle ve listele
+// Notları listele
 async function loadNotes() {
   const res = await fetch('/notes', {
     headers: { Authorization: `Bearer ${token}` },
@@ -137,9 +93,9 @@ async function loadNotes() {
     const deleteBtn = document.createElement('button');
     deleteBtn.textContent = 'Sil';
     deleteBtn.addEventListener('click', () => {
-      showConfirmDialog('Bu notu silmek istediğinize emin misiniz?', () =>
-        deleteNote(note.id)
-      );
+      showConfirmDialog('Bu notu silmek istediğinize emin misiniz?', () => {
+        deleteNote(note.id);
+      });
     });
 
     const editBtn = document.createElement('button');
@@ -176,7 +132,7 @@ async function loadNotes() {
   });
 }
 
-// Not silme
+// Not silme işlemi
 async function deleteNote(noteId) {
   const res = await fetch(`/notes/${noteId}`, {
     method: 'DELETE',
@@ -190,7 +146,42 @@ async function deleteNote(noteId) {
   }
 }
 
-// Not güncelleme
+
+// NOT EKLEME – Not Ekle butonuna tıklandığında çalışır
+document.getElementById('addNoteBtn').addEventListener('click', async () => {
+  const noteInput = document.getElementById('noteInput');
+  const content = noteInput.value.trim();
+
+  if (!content) {
+    showCustomAlert('Lütfen boş bir not yazmayın.');
+    return;
+  }
+
+  try {
+    const res = await fetch('/notes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ content }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      noteInput.value = '';
+      loadNotes(); // Yeni notu listele
+    } else {
+      showCustomAlert(data.message || 'Not eklenemedi.');
+    }
+  } catch (err) {
+    showCustomAlert('Sunucu hatası: not eklenemedi.');
+    console.error(err);
+  }
+});
+
+
+// Not güncelleme işlemi
 async function editNote(noteId, newContent) {
   const res = await fetch(`/notes/${noteId}`, {
     method: 'PUT',
@@ -206,4 +197,54 @@ async function editNote(noteId, newContent) {
   } else {
     showCustomAlert('Not güncellenemedi!');
   }
+}
+
+
+// Özel uyarı kutusu göster
+function showCustomAlert(message) {
+  const overlay = document.getElementById('messageOverlay');
+  const messageText = document.getElementById('messageText');
+  const confirmYes = document.getElementById('confirmYes');
+  const confirmNo = document.getElementById('confirmNo');
+
+  messageText.textContent = message;
+  overlay.classList.add('active');
+  confirmYes.style.display = 'none';
+  confirmNo.textContent = 'Tamam';
+
+  const closeOverlay = () => {
+    overlay.classList.remove('active');
+    confirmYes.style.display = 'inline-block';
+    confirmNo.textContent = '❌ Hayır';
+  };
+
+  confirmNo.onclick = closeOverlay;
+  document.getElementById('closeModalBtn').onclick = closeOverlay;
+}
+
+// Onay kutusu (evet/hayır)
+function showConfirmDialog(message, onConfirm) {
+  const overlay = document.getElementById('messageOverlay');
+  const messageText = document.getElementById('messageText');
+
+  messageText.textContent = message;
+  overlay.classList.add('active');
+
+  const yesBtn = document.getElementById('confirmYes');
+  const noBtn = document.getElementById('confirmNo');
+  const closeBtn = document.getElementById('closeModalBtn');
+
+  const cleanup = () => {
+    overlay.classList.remove('active');
+    yesBtn.onclick = null;
+    noBtn.onclick = null;
+    closeBtn.onclick = null;
+  };
+
+  yesBtn.onclick = () => {
+    cleanup();
+    onConfirm();
+  };
+
+  noBtn.onclick = closeBtn.onclick = cleanup;
 }

@@ -30,6 +30,17 @@
 </head>
 
 <body>
+    <div id="messageOverlay" class="hidden">
+        <div id="messageBox" class="modal-box">
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+            <p id="messageText">Mesaj yeri</p>
+            <div class="btn-group">
+                <button id="confirmYes" class="yes-btn">✅ Evet</button>
+                <button id="confirmNo" class="no-btn">❌ Hayır</button>
+            </div>
+        </div>
+    </div>
+
     <h1>Notlarım</h1>
 
     <!-- 📋 Notları gösteren alan -->
@@ -37,8 +48,8 @@
 
     <h2>Yeni Not Ekle</h2>
     <form id="noteForm">
-        <textarea id="noteContent" rows="4" cols="50" placeholder="Notunuzu yazın..." required></textarea><br>
-        <button type="submit">Not Ekle</button>
+        <textarea id="noteInput" placeholder="Notunuzu yazın..."></textarea>
+        <button id="addNoteBtn">Not Ekle</button>
     </form>
 
     <script src="notes.js"></script>

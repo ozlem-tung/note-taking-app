@@ -1,60 +1,172 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f7f7f7;
-  color: #333;
-}
-body h1,
-body h2 {
-  color: rgb(25.5, 25.5, 25.5);
+  margin: 0;
+  padding: 20px;
+  color: #222;
 }
 
-body form {
-  margin-bottom: 2rem;
-  background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  width: 400px;
-  max-width: 100%;
+h1 {
+  font-size: 32px;
+  color: #111;
+  margin-bottom: 20px;
 }
-body form textarea {
-  width: 100%;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border-radius: 4px;
+
+.hidden {
+  display: none;
+}
+
+.auth-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.auth-form input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
   border: 1px solid #ccc;
 }
-body form button {
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
+.auth-form button {
+  padding: 10px;
+  background-color: #28a745;
   border: none;
-  border-radius: 4px;
-  background-color: #4caf50;
+  border-radius: 5px;
   color: white;
+  font-size: 16px;
   cursor: pointer;
 }
-body form button:hover {
-  background-color: rgb(60.5577689243, 139.4422310757, 63.7450199203);
+.auth-form button:hover {
+  background-color: #218838;
 }
-body ul {
-  padding: 0;
+
+#userPanel {
+  margin-top: 20px;
+  text-align: center;
+}
+#userPanel #usernameBox {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+#userPanel textarea {
+  width: 300px;
+  height: 80px;
+  padding: 10px;
+  border-radius: 5px;
+  margin: 10px;
+  font-size: 15px;
+  resize: none;
+}
+#userPanel button {
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+#noteList {
   list-style: none;
+  padding: 0;
 }
-body ul li {
-  background: white;
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border-left: 5px solid #4caf50;
+#noteList li {
+  background-color: #fff;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-left: 5px solid #28a745;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#noteList li span {
+  flex-grow: 1;
+}
+#noteList li button {
+  background-color: #dc3545;
+  color: white;
+  margin-left: 10px;
+}
+#noteList li button:hover {
+  background-color: #c82333;
+}
+#noteList li small {
+  margin-left: 15px;
+  color: #555;
+}
+
+#messageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+#messageOverlay.active {
+  display: flex;
+}
+#messageOverlay #messageBox.modal-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+#messageOverlay #messageBox.modal-box .close-btn {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #555;
+}
+#messageOverlay #messageBox.modal-box .close-btn:hover {
+  color: #000;
+}
+#messageOverlay #messageBox.modal-box .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+#messageOverlay #messageBox.modal-box .btn-group button {
+  padding: 8px 16px;
+  border: none;
   border-radius: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
-body ul li button {
-  margin-left: 0.5rem;
-  background-color: #f44336;
+#messageOverlay #messageBox.modal-box .btn-group .yes-btn {
+  background-color: #28a745;
+  color: white;
 }
-body ul li button:hover {
-  background-color: rgb(234.1839622642, 27.9622641509, 12.8160377358);
+#messageOverlay #messageBox.modal-box .btn-group .yes-btn:hover {
+  background-color: #218838;
+}
+#messageOverlay #messageBox.modal-box .btn-group .no-btn {
+  background-color: #dc3545;
+  color: white;
+}
+#messageOverlay #messageBox.modal-box .btn-group .no-btn:hover {
+  background-color: #c82333;
 }
 
 /*# sourceMappingURL=style.css.map */
