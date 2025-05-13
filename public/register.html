@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <title>Kayıt Ol</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
@@ -36,8 +35,13 @@
             const result = document.getElementById('result');
 
             if (response.ok) {
-                result.textContent = '✅ ' + data.message;
+                result.textContent = '✅ ' + data.message + ' Giriş sayfasına yönlendiriliyorsunuz...';
                 result.style.color = 'green';
+
+                // 2 saniye sonra login sayfasına yönlendir
+                setTimeout(() => {
+                    window.location.href = 'login.html'; // veya index.html
+                }, 2000);
             } else {
                 result.textContent = '❌ ' + (data.message || 'Bir hata oluştu');
                 result.style.color = 'red';

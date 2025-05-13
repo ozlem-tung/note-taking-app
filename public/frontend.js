@@ -32,7 +32,7 @@ if (loginForm) {
       showUserPanel();
       loadNotes();
     } else {
-      showCustomAlert(data.message || 'Giriş başarısız');
+      showCustomAlert(data.message || 'Giriş başarısız', false);
     }
   });
 }
@@ -43,6 +43,53 @@ if (showRegisterBtn) {
   showRegisterBtn.addEventListener('click', () => {
     document.getElementById('loginSection').style.display = 'none';
     document.getElementById('registerSection').style.display = 'block';
+  });
+}
+
+// Giriş formunu göster
+const showLoginBtn = document.getElementById('showLoginBtn');
+if (showLoginBtn) {
+  showLoginBtn.addEventListener('click', () => {
+    document.getElementById('registerSection').style.display = 'none';
+    document.getElementById('loginSection').style.display = 'block';
+  });
+}
+
+function isPasswordValid(password) {
+  const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/;
+  return pattern.test(password);
+}
+
+// Kayıt işlemi
+const registerForm = document.getElementById('registerForm');
+if (registerForm) {
+  registerForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('registerUsername').value;
+    const password = document.getElementById('registerPassword').value;
+
+    if (!isPasswordValid(password)) {
+      showCustomAlert(
+        'Şifre en az 8 karakter olmalı ve en az 1 büyük harf, 1 küçük harf, 1 rakam ve 1 özel karakter içermelidir.',
+        false
+      );
+      return;
+    }
+
+    const res = await fetch('/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      showCustomAlert('Kayıt başarılı, giriş yapabilirsiniz.', true);
+      document.getElementById('registerSection').style.display = 'none';
+      document.getElementById('loginSection').style.display = 'block';
+    } else {
+      showCustomAlert(data.message || 'Kayıt başarısız', false);
+    }
   });
 }
 
@@ -142,10 +189,9 @@ async function deleteNote(noteId) {
   if (res.ok) {
     loadNotes();
   } else {
-    showCustomAlert('Not silinemedi!');
+    showCustomAlert('Not silinemedi!', false);
   }
 }
-
 
 // NOT EKLEME – Not Ekle butonuna tıklandığında çalışır
 document.getElementById('addNoteBtn').addEventListener('click', async () => {
@@ -153,7 +199,7 @@ document.getElementById('addNoteBtn').addEventListener('click', async () => {
   const content = noteInput.value.trim();
 
   if (!content) {
-    showCustomAlert('Lütfen boş bir not yazmayın.');
+    showCustomAlert('Lütfen boş bir not yazmayın.', false);
     return;
   }
 
@@ -170,16 +216,15 @@ document.getElementById('addNoteBtn').addEventListener('click', async () => {
     const data = await res.json();
     if (res.ok) {
       noteInput.value = '';
-      loadNotes(); // Yeni notu listele
+      loadNotes();
     } else {
-      showCustomAlert(data.message || 'Not eklenemedi.');
+      showCustomAlert(data.message || 'Not eklenemedi.', false);
     }
   } catch (err) {
-    showCustomAlert('Sunucu hatası: not eklenemedi.');
+    showCustomAlert('Sunucu hatası: not eklenemedi.', false);
     console.error(err);
   }
 });
-
 
 // Not güncelleme işlemi
 async function editNote(noteId, newContent) {
@@ -195,13 +240,12 @@ async function editNote(noteId, newContent) {
   if (res.ok) {
     loadNotes();
   } else {
-    showCustomAlert('Not güncellenemedi!');
+    showCustomAlert('Not güncellenemedi!', false);
   }
 }
 
-
-// Özel uyarı kutusu göster
-function showCustomAlert(message) {
+// Özel uyarı kutusu göster (type: true -> success, false -> error)
+function showCustomAlert(message, isSuccess = true) {
   const overlay = document.getElementById('messageOverlay');
   const messageText = document.getElementById('messageText');
   const confirmYes = document.getElementById('confirmYes');
@@ -211,11 +255,15 @@ function showCustomAlert(message) {
   overlay.classList.add('active');
   confirmYes.style.display = 'none';
   confirmNo.textContent = 'Tamam';
+  confirmNo.style.backgroundColor = isSuccess ? 'green' : 'crimson';
+  confirmNo.style.color = 'white';
 
   const closeOverlay = () => {
     overlay.classList.remove('active');
     confirmYes.style.display = 'inline-block';
     confirmNo.textContent = '❌ Hayır';
+    confirmNo.style.backgroundColor = '';
+    confirmNo.style.color = '';
   };
 
   confirmNo.onclick = closeOverlay;

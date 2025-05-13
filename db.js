@@ -1,8 +1,11 @@
+// db.js (güncellenmiş .env uyumlu)
+require('dotenv').config();
+
 const config = {
-  user: 'sa',
-  password: '29279525236',
-  server: 'localhost',
-  database: 'NoteAppDB',
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  server: process.env.DB_SERVER,
+  database: process.env.DB_NAME,
   options: {
     trustServerCertificate: true,
   },
