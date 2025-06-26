@@ -1,0 +1,192 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1e1e2f;
+  margin: 0;
+  padding: 0;
+  color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  background-color: #2c2f48;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  max-width: 420px;
+  width: 90%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+h1 img {
+  vertical-align: middle;
+  width: 28px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.auth-form input {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #3a3d5c;
+  color: #fff;
+}
+.auth-form input::placeholder {
+  color: #bbb;
+}
+.auth-form button {
+  padding: 12px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.auth-form button img {
+  width: 20px;
+  height: 20px;
+}
+.auth-form button:hover {
+  background-color: #388e3c;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-inline {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.switch-auth {
+  margin-top: 20px;
+}
+.switch-auth a {
+  color: #64b5f6;
+  text-decoration: none;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.switch-auth a:hover {
+  text-decoration: underline;
+}
+.switch-auth a img {
+  width: 16px;
+  height: 16px;
+}
+
+#userPanel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+#userPanel #usernameBox {
+  font-weight: bold;
+  font-size: 18px;
+}
+#userPanel #noteInput {
+  width: 100%;
+  height: 100px;
+  padding: 12px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #3a3d5c;
+  color: #fff;
+  resize: none;
+}
+#userPanel #addNoteBtn,
+#userPanel #logoutBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#userPanel #addNoteBtn img,
+#userPanel #logoutBtn img {
+  width: 18px;
+  height: 18px;
+}
+#userPanel #addNoteBtn {
+  background-color: #2196f3;
+  color: #fff;
+}
+#userPanel #addNoteBtn:hover {
+  background-color: #1976d2;
+}
+#userPanel #logoutBtn {
+  background-color: #e53935;
+  color: #fff;
+}
+#userPanel #logoutBtn:hover {
+  background-color: #c62828;
+}
+
+#noteList {
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  margin-top: 15px;
+}
+#noteList li {
+  background-color: #3a3d5c;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#noteList li span {
+  flex-grow: 1;
+}
+#noteList li button {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+#noteList li button:hover {
+  background-color: #c62828;
+}
+
+/*# sourceMappingURL=style.css.map */

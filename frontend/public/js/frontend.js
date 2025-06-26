@@ -1,5 +1,7 @@
 // frontend.js (güncellenmiş tam sürüm)
 
+const API_URL = 'http://localhost:3000';
+
 let token = null;
 let currentUser = null;
 
@@ -19,7 +21,7 @@ if (loginForm) {
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
 
-    const res = await fetch('/login', {
+   const res = await fetch(`${API_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -76,7 +78,7 @@ if (registerForm) {
       return;
     }
 
-    const res = await fetch('/register', {
+    const res = await fetch('http://localhost:3000/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
@@ -243,6 +245,37 @@ async function editNote(noteId, newContent) {
     showCustomAlert('Not güncellenemedi!', false);
   }
 }
+
+const resetForm = document.getElementById('resetForm');
+if (resetForm) {
+  resetForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('resetUsername').value.trim();
+    const newPassword = document.getElementById('resetNewPassword').value.trim();
+
+    if (!isPasswordValid(newPassword)) {
+      showCustomAlert(
+        'Şifre en az 8 karakter olmalı, büyük-küçük harf, sayı ve özel karakter içermelidir.',
+        false
+      );
+      return;
+    }
+
+    const res = await fetch('/reset-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, newPassword }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      showCustomAlert('Şifre başarıyla sıfırlandı.', true);
+    } else {
+      showCustomAlert(data.message || 'Şifre sıfırlama başarısız', false);
+    }
+  });
+}
+
 
 // Özel uyarı kutusu göster (type: true -> success, false -> error)
 function showCustomAlert(message, isSuccess = true) {
