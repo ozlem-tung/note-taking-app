@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
+
 const SECRET_KEY = 'ozlem-tug-not-uygulamasi'; // app.js'tekiyle aynı olmalı
 
 function verifyToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-
+  
+const authHeader = req.headers['authorization'];
   if (!authHeader) {
     return res.status(401).json({ message: 'Token gerekli' });
   }

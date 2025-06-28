@@ -1,3 +1,4 @@
+// ✅ DÜZENLENMİŞ VE HATASIZ HAL - app.js
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -10,22 +11,17 @@ const verifyToken = require('./verifyToken');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SECRET_KEY = process.env.JWT_SECRET || 'sencerinSirridir';
+const SECRET_KEY = process.env.JWT_SECRET || app.use(cors());
 
-// Middleware
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-// Public frontend dosyalarını sun
 app.use(express.static(path.join(__dirname, '../frontend/public')));
 
-// Ana sayfa → login.html
-app.get('/', (req, res) => {
+app.get('/', (req , res) => {
   res.sendFile(path.join(__dirname, '../frontend/public/login.html'));
 });
 
-// Şifre kontrol fonksiyonu
 function isPasswordStrong(password) {
   const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z\d]).{8,}$/;
   return pattern.test(password);
@@ -34,8 +30,6 @@ function isPasswordStrong(password) {
 // ✅ KAYIT OL
 app.post('/register', async (req, res) => {
   try {
-    console.log('📥 Gelen veri:', req.body); // <-- BURASI EKLENDİ
-
     let { username, password } = req.body;
 
     if (!username || !password) {
@@ -67,6 +61,7 @@ app.post('/register', async (req, res) => {
     }
 
     const hashed = await bcrypt.hash(password, 10);
+
     await pool
       .request()
       .input('username', sql.NVarChar, username)
@@ -81,52 +76,15 @@ app.post('/register', async (req, res) => {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });
-
-// ✅ GİRİŞ YAP
-app.post('/login', async (req, res) => {
-  try {
-    let { username, password } = req.body;
-
-    if (!username || !password)
-      return res
-        .status(400)
-        .json({ message: 'Kullanıcı adı ve şifre gerekli' });
-
-    username = username.trim().toLowerCase();
-
-    const pool = await sql.connect(config);
-    const result = await pool
-      .request()
-      .input('username', sql.NVarChar, username)
-      .query('SELECT * FROM Users WHERE username = @username');
-
-    const user = result.recordset[0];
-    if (!user) return res.status(401).json({ message: 'Kullanıcı bulunamadı' });
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: 'Şifre hatalı' });
-
-    const token = jwt.sign(
-      { userId: user.id, username: user.username },
-      SECRET_KEY,
-      { expiresIn: process.env.JWT_EXPIRATION || '1h' }
-    );
-
-    res.status(200).json({ message: 'Giriş başarılı', token });
-  } catch (error) {
-    console.error('🛑 Giriş hatası:', error);
-    res.status(500).json({ message: 'Sunucu hatası', error: error.message });
-  }
-});
-
 // ✅ NOT EKLE
 app.post('/notes', verifyToken, async (req, res) => {
   try {
     const { content } = req.body;
     const userId = req.user.userId;
 
-    if (!content)
+    if (!content) {
       return res.status(400).json({ message: 'Not içeriği gerekli' });
+    }
 
     const pool = await sql.connect(config);
     await pool
@@ -162,7 +120,6 @@ app.get('/notes', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });
-
 // ✅ NOT SİL
 app.delete('/notes/:id', verifyToken, async (req, res) => {
   try {
@@ -170,14 +127,16 @@ app.delete('/notes/:id', verifyToken, async (req, res) => {
     const userId = req.user.userId;
 
     const pool = await sql.connect(config);
+
     const result = await pool
       .request()
       .input('noteId', sql.Int, noteId)
       .input('userId', sql.Int, userId)
-      .query('SELECT * FROM Notes WHERE id = @noteId AND user_id = @userId');
+      .query('SELECT * FROM Notes WHERE id = @noteId AND user_id = @userId ');
 
-    if (result.recordset.length === 0)
+    if (result.recordset.length === 0) {
       return res.status(403).json({ message: 'Bu nota erişiminiz yok' });
+    }
 
     await pool
       .request()
@@ -190,7 +149,6 @@ app.delete('/notes/:id', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Sunucu hatası', error: error.message });
   }
 });
-
 // ✅ NOT GÜNCELLE
 app.put('/notes/:id', verifyToken, async (req, res) => {
   try {
@@ -201,14 +159,16 @@ app.put('/notes/:id', verifyToken, async (req, res) => {
     if (!content) return res.status(400).json({ message: 'İçerik boş olamaz' });
 
     const pool = await sql.connect(config);
+
     const result = await pool
       .request()
       .input('noteId', sql.Int, noteId)
       .input('userId', sql.Int, userId)
       .query('SELECT * FROM Notes WHERE id = @noteId AND user_id = @userId');
 
-    if (result.recordset.length === 0)
+    if (result.recordset.length === 0) {
       return res.status(403).json({ message: 'Yetkisiz güncelleme' });
+    }
 
     await pool
       .request()
@@ -223,12 +183,54 @@ app.put('/notes/:id', verifyToken, async (req, res) => {
   }
 });
 
-// Sunucuyu başlat
+
+
+
+// ✅ GİRİŞ YAP
+app.post('/login', async (req, res) => {
+  try {
+    let { username, password } = req.body;
+
+    if (!username || !password) {
+      return res
+        .status(400)
+        .json({ message: 'Kullanıcı adı ve şifre gerekli' });
+    }
+
+    username = username.trim().toLowerCase();
+
+    const pool = await sql.connect(config);
+    const result = await pool
+      .request()
+      .input('username', sql.NVarChar, username)
+      .query('SELECT * FROM Users WHERE username = @username');
+
+    const user = result.recordset[0];
+    if (!user) return res.status(401).json({ message: 'Kullanıcı bulunamadı' });
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Şifre hatalı' });
+
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      SECRET_KEY,
+      { expiresIn: process.env.JWT_EXPIRATION || '1h' }
+    );
+
+    res.status(200).json({ message: 'Giriş başarılı', token });
+  } catch (error) {
+    console.error('🛑 Giriş hatası:', error);
+    res.status(500).json({ message: 'Sunucu hatası', error: error.message });
+  }
+});
+
+
+
+
 app.listen(PORT, () => {
   console.log(`🚀 Sunucu çalışıyor: http://localhost:${PORT}`);
 });
 
-// Beklenmeyen hataları yakala
 process.on('uncaughtException', (err) => {
   console.error('💥 Kritik Sunucu Hatası:', err);
 });

@@ -1,3 +1,5 @@
+
+
 body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f7f7f7;
@@ -7,9 +9,25 @@ body {
 }
 
 h1 {
+  background-color: #3eb646;
   font-size: 32px;
   color: #111;
-  margin-bottom: 20px;
+  margin: 20px auto; /* Ortalar ve dikey boşluk verir */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  max-width: 400px; /* Genişliği sınırlar */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+h1 img {
+  vertical-align: middle;
+  width: 35px !important;
+  height: 35px !important;
+  margin-right: 10px;
 }
 
 .hidden {
@@ -27,53 +45,83 @@ h1 {
   flex-direction: column;
   gap: 10px;
 }
+
 .auth-form input {
-  padding: 10px;
+  padding: 12px;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 8px;
   border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
 }
+
 .auth-form button {
-  padding: 10px;
-  background-color: #28a745;
+  background-color: #0c7e12;
+  color: #111;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 14px 28px;
   border: none;
-  border-radius: 5px;
-  color: white;
-  font-size: 16px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   cursor: pointer;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
 }
+
+.auth-form button img {
+  width: 20px;
+  height: 20px;
+}
+
 .auth-form button:hover {
-  background-color: #218838;
+  background-color: #43a158;
 }
 
 #userPanel {
   margin-top: 20px;
   text-align: center;
 }
+
 #userPanel #usernameBox {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 #userPanel textarea {
-  width: 300px;
-  height: 80px;
+  width: 400px;
+  height: 100px;
   padding: 10px;
   border-radius: 5px;
   margin: 10px;
   font-size: 15px;
   resize: none;
 }
+
 #userPanel button {
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
   font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#userPanel button img {
+  width: 18px;
+  height: 18px;
 }
 
 #noteList {
   list-style: none;
   padding: 0;
 }
+
 #noteList li {
   background-color: #fff;
   padding: 15px;
@@ -85,17 +133,25 @@ h1 {
   justify-content: space-between;
   align-items: center;
 }
+
 #noteList li span {
   flex-grow: 1;
 }
+
 #noteList li button {
   background-color: #dc3545;
   color: white;
   margin-left: 10px;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
 }
+
 #noteList li button:hover {
   background-color: #c82333;
 }
+
 #noteList li small {
   margin-left: 15px;
   color: #555;
@@ -113,9 +169,11 @@ h1 {
   align-items: center;
   z-index: 1000;
 }
+
 #messageOverlay.active {
   display: flex;
 }
+
 #messageOverlay #messageBox.modal-box {
   background-color: #fff;
   padding: 20px;
@@ -126,6 +184,7 @@ h1 {
   max-width: 90%;
   position: relative;
 }
+
 #messageOverlay #messageBox.modal-box .close-btn {
   position: absolute;
   top: 10px;
@@ -137,15 +196,18 @@ h1 {
   cursor: pointer;
   color: #555;
 }
+
 #messageOverlay #messageBox.modal-box .close-btn:hover {
   color: #000;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group {
   display: flex;
   justify-content: center;
   gap: 10px;
   margin-top: 20px;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group button {
   padding: 8px 16px;
   border: none;
@@ -154,21 +216,66 @@ h1 {
   font-weight: bold;
   cursor: pointer;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group .yes-btn {
   background-color: #28a745;
   color: white;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group .yes-btn:hover {
   background-color: #218838;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group .no-btn {
   background-color: #dc3545;
   color: white;
 }
+
 #messageOverlay #messageBox.modal-box .btn-group .no-btn:hover {
   background-color: #c82333;
 }
 
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-inline {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+  margin-right: 6px;
+}
+
+.switch-auth {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.switch-auth a {
+  background-color: #643db7;
+  color: #111;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.switch-auth a img {
+  width: 22px;
+  height: 22px;
+}
+
+.switch-auth a:hover {
+  background-color: #5d64cd;
+}
 
 
 /*# sourceMappingURL=style.css.map */

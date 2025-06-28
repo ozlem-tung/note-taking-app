@@ -24,9 +24,18 @@
                 <img src="img/icon/logout.png" alt="Logout" class="icon" /> Çıkış Yap
             </button>
         </div>
-        <div id="messageOverlay">
-            <div id="messageBox" class="modal-box"></div>
+        <!-- Uyarı / Onay Kutusu -->
+        <div id="messageOverlay" class="hidden">
+            <div id="messageBox" class="modal-box">
+                <button id="closeModalBtn" class="close-btn">&times;</button>
+                <p id="messageText">Mesaj buraya gelecek</p>
+                <div class="btn-group">
+                    <button id="confirmYes" class="yes-btn">✔ Evet</button>
+                    <button id="confirmNo" class="no-btn">❌ Hayır</button>
+                </div>
+            </div>
         </div>
+
     </div>
     <script src="js/notes.js"></script>
 </body>
